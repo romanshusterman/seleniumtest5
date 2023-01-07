@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from selenium import webdriver
 from bs4 import BeautifulSoup
 import os
@@ -23,13 +25,9 @@ driver.close()
 
 soup = BeautifulSoup(soup1, 'lxml')
 
-try:
-    soup.find('span', class_='qtyValidate_color', style='display: block;').contents[0] == 'הכמות המבוקשת אינה קיימת'
-    qty_validate = soup.find('span', class_='qtyValidate_color', style='display: block;').contents[0]
-    result = f'Ooops, the stock is empty ({qty_validate}). Open the app later to check quantity \n'
-except AttributeError as err:
-    result = "Tut sheli, it'shopping time, your favorite lip pencil is in stock \n https://www.ilmakiage.co.il/mineral-lip-pencil-4043 \n"
 
-current_time = datetime.datetime.now()
-with open('rand2.txt', mode='a') as file:
-    file.write(f"{current_time}, {result}")
+soup.find('span', class_='qtyValidate_color', style='display: block;').contents[0] == u'הכמות המבוקשת אינה קיימת'
+qty_validate = soup.find('span', class_='qtyValidate_color', style='display: block;').contents[0]
+result = f'Ooops, the stock is empty ({qty_validate}). Open the app later to check quantity \n'
+
+print(result)
